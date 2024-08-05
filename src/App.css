@@ -68,7 +68,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   transform-style: preserve-3d;
-  transition: transform 0.6s, background-color 0.3s, transform 0.3s;
+  transition: transform 0.6s, background-color 0.3s;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -127,11 +127,9 @@ body {
   background-color: #f8d7da;
 }
 
-/* Next Button Styling */
+/* Button Styling */
 button {
-  margin-top: 20px; /* Space above the button */
-  margin-bottom: 10px; /* Space below the button (if needed) */
-  margin-left: 20px; /* Space on the left side of the button */
+  margin: 20px 20px 10px 0; /* Space around the button */
   background-color: #ff6600;
   border: none;
   border-radius: 5px;
@@ -152,6 +150,28 @@ button:active {
   transform: scale(1.02);
 }
 
+/* Shuffle Button Styling */
+.shuffle-button {
+  margin-top: 20px; /* Space above the button */
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.shuffle-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.shuffle-button:active {
+  transform: scale(1.02);
+}
 
 /* Color Coding Info Styling */
 .color-coding {
@@ -213,29 +233,7 @@ button:active {
   cursor: not-allowed;
 }
 
-/* Shuffle Button Styling */
-.shuffle-button {
-  margin-top: 20px; /* Space above the button */
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 1.1rem;
-  padding: 12px 24px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.shuffle-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
-}
-
-.shuffle-button:active {
-  transform: scale(1.02);
-}
-
+/* Game Stats Styling */
 .game-stats-container {
   background-color: #f0f8ff; /* Light background color */
   border-radius: 8px;       /* Rounded corners */
@@ -258,4 +256,26 @@ button:active {
 
 .game-stats p {
   margin: 5px 0;                  /* Space between paragraphs */
+}
+
+/* Feedback Message Styling */
+.feedback {
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  color: #fff;
+  max-width: 300px;
+  margin: 20px auto;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Correct feedback */
+.feedback.correct {
+  background-color: #28a745; /* Green color for correct */
+}
+
+/* Incorrect feedback */
+.feedback.incorrect {
+  background-color: #dc3545; /* Red color for incorrect */
 }
