@@ -129,7 +129,7 @@ body {
 
 /* Button Styling */
 button {
-  margin-top: 20px;
+  margin: 10px; /* Add space around buttons */
   background-color: #ff6600;
   border: none;
   border-radius: 5px;
