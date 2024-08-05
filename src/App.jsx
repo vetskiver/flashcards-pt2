@@ -14,6 +14,12 @@ const App = () => {
   const [flipped, setFlipped] = useState(false);
   const [guess, setGuess] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
+  const [showAnswer, setShowAnswer] = useState(false);
+
+  // State variables for tracking answers
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [incorrectAnswers, setIncorrectAnswers] = useState(0);
+  const [skippedQuestions, setSkippedQuestions] = useState(0);
 
   const getNextCard = () => {
     let nextCard; 
@@ -29,9 +35,14 @@ const App = () => {
     setFlipped(false);
     setGuess('');
     setIsCorrect(null);
+    setShowAnswer(false); // Hide answer when going to the next card
   };
 
   const handleFlip = () => {
+    if (!guess.trim()) {
+      // Increment skipped questions if no guess was made
+      setSkippedQuestions(skippedQuestions + 1);
+    }
     setFlipped(!flipped);
   };
 
@@ -41,9 +52,33 @@ const App = () => {
 
   const handleSubmit = () => {
     const correctAnswer = Data[currentCard].answer.toLowerCase();
-    setIsCorrect(guess.toLowerCase() === correctAnswer);
-    setFlipped(true);
+    const isAnswerCorrect = guess.toLowerCase() === correctAnswer;
+    
+    setIsCorrect(isAnswerCorrect);
+    setShowAnswer(true); // Show answer immediately when submitting
+
+    // Update correct and incorrect answers
+    if (isAnswerCorrect) {
+      setCorrectAnswers(correctAnswers + 1);
+    } else {
+      setIncorrectAnswers(incorrectAnswers + 1);
+    }
+
+    // Delay the flip action to prevent showing the next card's answer briefly
+    setTimeout(() => {
+      setFlipped(true);
+    }, 300); // Adjust delay as needed
   };
+
+  // Optionally, auto-flip card after showing answer and a delay
+  React.useEffect(() => {
+    if (flipped) {
+      const timer = setTimeout(() => {
+        handleNext();
+      }, 1000); // Adjust delay if needed
+      return () => clearTimeout(timer);
+    }
+  }, [flipped]);
 
   return (
     <div className="App">
@@ -57,6 +92,7 @@ const App = () => {
           flipped={flipped}
           onFlip={handleFlip}
           difficulty={Data[currentCard].difficulty.toLowerCase()}
+          showAnswer={showAnswer} // Pass this to control answer visibility
         />
         <GuessInput
           value={guess}
@@ -72,6 +108,14 @@ const App = () => {
           isNextDisabled={isCorrect === null}
         />
         <ColorCodingInfo />
+
+        {/* Display statistics */}
+        <div className="stats">
+          <h3>Statistics</h3>
+          <p>Correct Answers: {correctAnswers}</p>
+          <p>Incorrect Answers: {incorrectAnswers}</p>
+          <p>Skipped Questions: {skippedQuestions}</p>
+        </div>
       </div>
     </div>
   );

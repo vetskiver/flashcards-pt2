@@ -68,7 +68,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   transform-style: preserve-3d;
-  transition: transform 0.6s, background-color 0.3s;
+  transition: transform 0.6s, background-color 0.3s, transform 0.3s;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -127,9 +127,11 @@ body {
   background-color: #f8d7da;
 }
 
-/* Button Styling */
+/* Next Button Styling */
 button {
-  margin: 10px; /* Add space around buttons */
+  margin-top: 20px; /* Space above the button */
+  margin-bottom: 10px; /* Space below the button (if needed) */
+  margin-left: 20px; /* Space on the left side of the button */
   background-color: #ff6600;
   border: none;
   border-radius: 5px;
@@ -149,6 +151,7 @@ button:hover {
 button:active {
   transform: scale(1.02);
 }
+
 
 /* Color Coding Info Styling */
 .color-coding {
@@ -184,16 +187,18 @@ button:active {
   color: #333;
 }
 
+/* Input Field Styling */
 .input-field {
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 4px;
-  width: 25%;
+  width: 300px; /* Adjust the width as needed */
   box-sizing: border-box;
   font-size: 16px;
   color: #333;
   background-color: #fff;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  margin: 10px 0; /* Add space around the input field */
 }
 
 .input-field:focus {
