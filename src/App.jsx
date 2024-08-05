@@ -16,13 +16,14 @@ const App = () => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
 
-  // State variables for tracking answers
+  // State variables for tracking answers and card history
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [skippedQuestions, setSkippedQuestions] = useState(0);
+  const [cardHistory, setCardHistory] = useState([]); // To keep track of visited cards
 
   const getNextCard = () => {
-    let nextCard; 
+    let nextCard;
     do {
       nextCard = Math.floor(Math.random() * Data.length);
     } while (nextCard === currentCard);
@@ -30,12 +31,25 @@ const App = () => {
   };
 
   const handleNext = () => {
+    setCardHistory([...cardHistory, currentCard]); // Push current card onto history stack
     const nextCard = getNextCard();
     setCurrentCard(nextCard);
     setFlipped(false);
     setGuess('');
     setIsCorrect(null);
     setShowAnswer(false); // Hide answer when going to the next card
+  };
+
+  const handleBack = () => {
+    if (cardHistory.length > 0) {
+      const previousCard = cardHistory.pop();
+      setCardHistory(cardHistory); // Update the history stack
+      setCurrentCard(previousCard);
+      setFlipped(false);
+      setGuess('');
+      setIsCorrect(null);
+      setShowAnswer(false); // Hide answer when going back
+    }
   };
 
   const handleFlip = () => {
@@ -53,7 +67,7 @@ const App = () => {
   const handleSubmit = () => {
     const correctAnswer = Data[currentCard].answer.toLowerCase();
     const isAnswerCorrect = guess.toLowerCase() === correctAnswer;
-    
+
     setIsCorrect(isAnswerCorrect);
     setShowAnswer(true); // Show answer immediately when submitting
 
@@ -104,8 +118,10 @@ const App = () => {
         <GameControls
           onSubmit={handleSubmit}
           onNext={handleNext}
+          onBack={handleBack} // Pass the handler for the BackButton
           isSubmitDisabled={flipped || guess.trim() === ''}
           isNextDisabled={isCorrect === null}
+          isBackDisabled={cardHistory.length === 0}
         />
         <ColorCodingInfo />
 
