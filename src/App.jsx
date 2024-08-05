@@ -21,11 +21,39 @@ const App = () => {
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [skippedQuestions, setSkippedQuestions] = useState(0);
   const [cardHistory, setCardHistory] = useState([]); // To keep track of visited cards
+  const [shuffledData, setShuffledData] = useState(Data);
+
+  const shuffleArray = (array) => {
+    let shuffled = array.slice(); // Create a copy of the array
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Swap elements
+    }
+    return shuffled;
+  };
+
+  const handleShuffle = () => {
+    const newShuffledData = shuffleArray(Data);
+    setShuffledData(newShuffledData);
+    setCurrentCard(0); // Reset to the first card
+    setCardHistory([]); // Clear card history
+
+    // Reset the game stats
+    setCorrectAnswers(0);
+    setIncorrectAnswers(0);
+    setSkippedQuestions(0);
+
+    // Optionally, reset any other states if needed
+    setFlipped(false);
+    setGuess('');
+    setIsCorrect(null);
+    setShowAnswer(false);
+  };
 
   const getNextCard = () => {
     let nextCard;
     do {
-      nextCard = Math.floor(Math.random() * Data.length);
+      nextCard = Math.floor(Math.random() * shuffledData.length);
     } while (nextCard === currentCard);
     return nextCard;
   };
@@ -43,7 +71,7 @@ const App = () => {
   const handleBack = () => {
     if (cardHistory.length > 0) {
       const previousCard = cardHistory.pop();
-      setCardHistory(cardHistory); // Update the history stack
+      setCardHistory([...cardHistory]); // Update the history stack by creating a new array
       setCurrentCard(previousCard);
       setFlipped(false);
       setGuess('');
@@ -65,7 +93,7 @@ const App = () => {
   };
 
   const handleSubmit = () => {
-    const correctAnswer = Data[currentCard].answer.toLowerCase();
+    const correctAnswer = shuffledData[currentCard].answer.toLowerCase(); // Use shuffledData here
     const isAnswerCorrect = guess.toLowerCase() === correctAnswer;
 
     setIsCorrect(isAnswerCorrect);
@@ -97,15 +125,15 @@ const App = () => {
   return (
     <div className="App">
       <div className='header'>
-        <Header numberOfCards={Data.length} />
+        <Header numberOfCards={shuffledData.length} /> {/* Use shuffledData.length */}
       </div>
       <div className='container'>
         <FlashCardContainer
-          term={Data[currentCard].term}
-          answer={Data[currentCard].answer}
+          term={shuffledData[currentCard].term} // Use shuffledData here
+          answer={shuffledData[currentCard].answer} // Use shuffledData here
           flipped={flipped}
           onFlip={handleFlip}
-          difficulty={Data[currentCard].difficulty.toLowerCase()}
+          difficulty={shuffledData[currentCard].difficulty.toLowerCase()} // Use shuffledData here
           showAnswer={showAnswer} // Pass this to control answer visibility
         />
         <GuessInput
@@ -119,6 +147,7 @@ const App = () => {
           onSubmit={handleSubmit}
           onNext={handleNext}
           onBack={handleBack} // Pass the handler for the BackButton
+          onShuffle={handleShuffle} // Pass the handler for the ShuffleButton
           isSubmitDisabled={flipped || guess.trim() === ''}
           isNextDisabled={isCorrect === null}
           isBackDisabled={cardHistory.length === 0}

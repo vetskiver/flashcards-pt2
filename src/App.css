@@ -212,3 +212,26 @@ button:active {
   color: #999;
   cursor: not-allowed;
 }
+
+/* Shuffle Button Styling */
+.shuffle-button {
+  margin-top: 20px; /* Space above the button */
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.shuffle-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.shuffle-button:active {
+  transform: scale(1.02);
+}
