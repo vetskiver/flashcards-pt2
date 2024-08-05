@@ -1,6 +1,6 @@
 // ColorCodingInfo.js
 import React from 'react';
-import '../App.css';
+import '../../App.css'; 
 
 const ColorCodingInfo = () => {
   return (

@@ -1,13 +1,18 @@
 import './App.css';
-import React, { useState } from 'react';
-
-import ColorCodingInfo from './components/ColorCodingInfo';
+import React, { useState, useEffect } from 'react';
 import Data from './components/Data';
-import Header from './components/Header';
-import GuessInput from './components/GuessInput';
-import FeedbackMessage from './components/FeedbackMessage';
-import FlashCardContainer from './components/FlashCardContainer';
-import GameControls from './components/GameControls';
+
+// Components
+import Header from './components/Header/Header';
+import GuessInput from './components/GuessInput/GuessInput';
+import FlashCardContainer from './components/FlashCards/FlashCardContainer';
+import FeedbackMessage from './components/Feedback/FeedbackMessage';
+import GameControls from './components/Game/GameControls';
+import GameStats from './components/Game/GameStats';
+import ColorCodingInfo from './components/Info/ColorCodingInfo';
+
+// Utility
+import Fuse from 'fuse.js';
 
 const App = () => {
   const [currentCard, setCurrentCard] = useState(0);
@@ -15,19 +20,18 @@ const App = () => {
   const [guess, setGuess] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
-
-  // State variables for tracking answers and card history
+  const [submittedCards, setSubmittedCards] = useState(new Set());
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [skippedQuestions, setSkippedQuestions] = useState(0);
-  const [cardHistory, setCardHistory] = useState([]); // To keep track of visited cards
+  const [cardHistory, setCardHistory] = useState([]);
   const [shuffledData, setShuffledData] = useState(Data);
 
   const shuffleArray = (array) => {
-    let shuffled = array.slice(); // Create a copy of the array
+    let shuffled = array.slice();
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Swap elements
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
   };
@@ -35,15 +39,12 @@ const App = () => {
   const handleShuffle = () => {
     const newShuffledData = shuffleArray(Data);
     setShuffledData(newShuffledData);
-    setCurrentCard(0); // Reset to the first card
-    setCardHistory([]); // Clear card history
-
-    // Reset the game stats
+    setCurrentCard(0);
+    setCardHistory([]);
     setCorrectAnswers(0);
     setIncorrectAnswers(0);
     setSkippedQuestions(0);
-
-    // Optionally, reset any other states if needed
+    setSubmittedCards(new Set());
     setFlipped(false);
     setGuess('');
     setIsCorrect(null);
@@ -59,30 +60,30 @@ const App = () => {
   };
 
   const handleNext = () => {
-    setCardHistory([...cardHistory, currentCard]); // Push current card onto history stack
+    if (shuffledData.length === 0) return;
+    setCardHistory(prevHistory => [...prevHistory, currentCard]);
     const nextCard = getNextCard();
     setCurrentCard(nextCard);
     setFlipped(false);
     setGuess('');
     setIsCorrect(null);
-    setShowAnswer(false); // Hide answer when going to the next card
+    setShowAnswer(false);
   };
 
   const handleBack = () => {
     if (cardHistory.length > 0) {
-      const previousCard = cardHistory.pop();
-      setCardHistory([...cardHistory]); // Update the history stack by creating a new array
+      const previousCard = cardHistory[cardHistory.length - 1];
+      setCardHistory(prevHistory => prevHistory.slice(0, -1));
       setCurrentCard(previousCard);
       setFlipped(false);
       setGuess('');
       setIsCorrect(null);
-      setShowAnswer(false); // Hide answer when going back
+      setShowAnswer(false);
     }
   };
 
   const handleFlip = () => {
     if (!guess.trim()) {
-      // Increment skipped questions if no guess was made
       setSkippedQuestions(skippedQuestions + 1);
     }
     setFlipped(!flipped);
@@ -93,74 +94,79 @@ const App = () => {
   };
 
   const handleSubmit = () => {
-    const correctAnswer = shuffledData[currentCard].answer.toLowerCase(); // Use shuffledData here
-    const isAnswerCorrect = guess.toLowerCase() === correctAnswer;
+    if (!guess.trim()) return;
+
+    const correctAnswer = shuffledData[currentCard].answer.toLowerCase().trim();
+    const userAnswer = guess.toLowerCase().trim();
+
+    const fuse = new Fuse([correctAnswer], { includeScore: true });
+    const result = fuse.search(userAnswer);
+
+    const isFuzzyMatch = result.length > 0 && result[0].score < 0.3;
+    const isAnswerCorrect = userAnswer === correctAnswer || isFuzzyMatch;
 
     setIsCorrect(isAnswerCorrect);
-    setShowAnswer(true); // Show answer immediately when submitting
+    setShowAnswer(true);
 
-    // Update correct and incorrect answers
     if (isAnswerCorrect) {
       setCorrectAnswers(correctAnswers + 1);
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
 
-    // Delay the flip action to prevent showing the next card's answer briefly
+    setSubmittedCards(prev => new Set(prev).add(currentCard));
+
     setTimeout(() => {
       setFlipped(true);
-    }, 300); // Adjust delay as needed
+    }, 300);
   };
 
-  // Optionally, auto-flip card after showing answer and a delay
-  React.useEffect(() => {
+  useEffect(() => {
     if (flipped) {
       const timer = setTimeout(() => {
         handleNext();
-      }, 1000); // Adjust delay if needed
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [flipped]);
 
+  const isCardGuessed = submittedCards.has(currentCard);
+  const isSubmitDisabled = !guess.trim() || flipped || isCardGuessed;
+
   return (
     <div className="App">
-      <div className='header'>
-        <Header numberOfCards={shuffledData.length} /> {/* Use shuffledData.length */}
-      </div>
+      <Header numberOfCards={shuffledData.length} />
       <div className='container'>
         <FlashCardContainer
-          term={shuffledData[currentCard].term} // Use shuffledData here
-          answer={shuffledData[currentCard].answer} // Use shuffledData here
+          term={shuffledData[currentCard].term}
+          answer={shuffledData[currentCard].answer}
           flipped={flipped}
           onFlip={handleFlip}
-          difficulty={shuffledData[currentCard].difficulty.toLowerCase()} // Use shuffledData here
-          showAnswer={showAnswer} // Pass this to control answer visibility
+          difficulty={shuffledData[currentCard].difficulty.toLowerCase()}
+          showAnswer={showAnswer}
         />
         <GuessInput
           value={guess}
           onChange={handleGuessChange}
-          disabled={flipped}
+          disabled={flipped || isCardGuessed}
           className="input-field"
         />
         <FeedbackMessage isCorrect={isCorrect} />
         <GameControls
           onSubmit={handleSubmit}
           onNext={handleNext}
-          onBack={handleBack} // Pass the handler for the BackButton
-          onShuffle={handleShuffle} // Pass the handler for the ShuffleButton
-          isSubmitDisabled={flipped || guess.trim() === ''}
-          isNextDisabled={isCorrect === null}
+          onBack={handleBack}
+          onShuffle={handleShuffle}
+          isSubmitDisabled={isSubmitDisabled}
+          isNextDisabled={false}
           isBackDisabled={cardHistory.length === 0}
         />
         <ColorCodingInfo />
-
-        {/* Display statistics */}
-        <div className="stats">
-          <h3>Statistics</h3>
-          <p>Correct Answers: {correctAnswers}</p>
-          <p>Incorrect Answers: {incorrectAnswers}</p>
-          <p>Skipped Questions: {skippedQuestions}</p>
-        </div>
+        <GameStats
+          correctAnswers={correctAnswers}
+          incorrectAnswers={incorrectAnswers}
+          skippedQuestions={skippedQuestions}
+        />
       </div>
     </div>
   );
