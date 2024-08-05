@@ -26,6 +26,8 @@ const App = () => {
   const [skippedQuestions, setSkippedQuestions] = useState(0);
   const [cardHistory, setCardHistory] = useState([]);
   const [shuffledData, setShuffledData] = useState(Data);
+  const [currentStreak, setCurrentStreak] = useState(0);
+  const [longestStreak, setLongestStreak] = useState(0);  
 
   const shuffleArray = (array) => {
     let shuffled = array.slice();
@@ -95,31 +97,38 @@ const App = () => {
 
   const handleSubmit = () => {
     if (!guess.trim()) return;
-
+  
     const correctAnswer = shuffledData[currentCard].answer.toLowerCase().trim();
     const userAnswer = guess.toLowerCase().trim();
-
+  
     const fuse = new Fuse([correctAnswer], { includeScore: true });
     const result = fuse.search(userAnswer);
-
+  
     const isFuzzyMatch = result.length > 0 && result[0].score < 0.3;
     const isAnswerCorrect = userAnswer === correctAnswer || isFuzzyMatch;
-
+  
     setIsCorrect(isAnswerCorrect);
     setShowAnswer(true);
-
+  
     if (isAnswerCorrect) {
       setCorrectAnswers(correctAnswers + 1);
+      setCurrentStreak(prevStreak => {
+        const newStreak = prevStreak + 1;
+        setLongestStreak(prevLongest => Math.max(prevLongest, newStreak));
+        return newStreak;
+      });
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
+      setCurrentStreak(0); // Reset current streak if the answer is incorrect
     }
-
+  
     setSubmittedCards(prev => new Set(prev).add(currentCard));
-
+  
     setTimeout(() => {
       setFlipped(true);
     }, 300);
   };
+  
 
   useEffect(() => {
     if (flipped) {
@@ -166,6 +175,8 @@ const App = () => {
           correctAnswers={correctAnswers}
           incorrectAnswers={incorrectAnswers}
           skippedQuestions={skippedQuestions}
+          currentStreak={currentStreak}
+          longestStreak={longestStreak}
         />
       </div>
     </div>
