@@ -1,12 +1,13 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import ColorCodingInfo from './components/ColorCodingInfo';
 import Data from './components/Data';
-import FlashCard from './components/FlashCard';
 import Header from './components/Header';
-import NextButton from './components/NextButton';
-import SubmitButton from './components/SubmitButton';
+import GuessInput from './components/GuessInput';
+import FeedbackMessage from './components/FeedbackMessage';
+import FlashCardContainer from './components/FlashCardContainer';
+import GameControls from './components/GameControls';
 
 const App = () => {
   const [currentCard, setCurrentCard] = useState(0);
@@ -24,7 +25,6 @@ const App = () => {
 
   const handleNext = () => {
     const nextCard = getNextCard();
-    
     setCurrentCard(nextCard);
     setFlipped(false);
     setGuess('');
@@ -37,53 +37,39 @@ const App = () => {
 
   const handleGuessChange = (e) => {
     setGuess(e.target.value);
-    if (e.target.value.trim() !== '') {
-    }
   };
 
   const handleSubmit = () => {
-
     const correctAnswer = Data[currentCard].answer.toLowerCase();
-    if (guess.toLowerCase() === correctAnswer) {
-      setIsCorrect(true);
-    } else {
-      setIsCorrect(false);
-    }
+    setIsCorrect(guess.toLowerCase() === correctAnswer);
     setFlipped(true);
   };
-  
+
   return (
     <div className="App">
       <div className='header'>
         <Header numberOfCards={Data.length} />
       </div>
       <div className='container'>
-        <FlashCard 
+        <FlashCardContainer
           term={Data[currentCard].term}
           answer={Data[currentCard].answer}
           flipped={flipped}
-          onClick={handleFlip}
+          onFlip={handleFlip}
           difficulty={Data[currentCard].difficulty.toLowerCase()}
         />
-        <input 
-          type="text"
+        <GuessInput
           value={guess}
           onChange={handleGuessChange}
-          placeholder='Your Guess'
           disabled={flipped}
+          className="input-field"
         />
-        <SubmitButton 
-          onClick={handleSubmit}
-          disabled={flipped || guess.trim() === ''}
-        />
-        {isCorrect !== null && (
-          <div className={`feedback ${isCorrect ? 'correct' : 'incorrect'}`}>
-            {isCorrect ? 'Correct!' : 'Incorrect!'}
-          </div>
-        )}
-        <NextButton 
-          onClick={handleNext}
-          disabled={isCorrect === null || guess.trim() === ''}
+        <FeedbackMessage isCorrect={isCorrect} />
+        <GameControls
+          onSubmit={handleSubmit}
+          onNext={handleNext}
+          isSubmitDisabled={flipped || guess.trim() === ''}
+          isNextDisabled={isCorrect === null}
         />
         <ColorCodingInfo />
       </div>

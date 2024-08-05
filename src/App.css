@@ -183,3 +183,27 @@ button:active {
   font-size: 1.2rem;
   color: #333;
 }
+
+.input-field {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  width: 25%;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-field:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.2);
+}
+
+.input-field:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
