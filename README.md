@@ -1,7 +1,7 @@
-# Flashcards Part 1
+# Flashcards Part 2
 
 ## Description
-Flashcards Part 1 is a web application designed to display and manage flashcards for various information sets. The application showcases a single card at a time, revealing different components of a paired information set. Users can interact with the flashcards to flip them and view the corresponding information, and navigate through the cards using a "Next" button.
+Flashcards Part 2 is a web application designed to display and manage flashcards for various information sets. The application showcases a single card at a time, revealing different components of a paired information set. Users can interact with the flashcards to flip them and view the corresponding information, and navigate through the cards using a "Next" button.
 
 ## Features
 
