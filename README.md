@@ -37,9 +37,9 @@ In this project, I:
 
 ## Demo
 A demo of the project can be viewed here:
-![Video Walkthrough](https://github.com/vetskiver/flashcards-p1/blob/master/flashcards-p1-demo.gif)
+![Video Walkthrough](https://github.com/vetskiver/flashcards-pt2/blob/master/flashcards-pt2-demo.gif)
 
 ## Getting Started
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/flashcards-part-1.git
+   git clone https://github.com/yourusername/flashcards-pt2.git
