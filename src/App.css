@@ -68,7 +68,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   transform-style: preserve-3d;
-  transition: transform 0.6s, background-color 0.3s, transform 0.3s;
+  transition: transform 0.6s, background-color 0.3s;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -127,7 +127,7 @@ body {
   background-color: #f8d7da;
 }
 
-/* Next Button Styling */
+/* Button Styling */
 button {
   margin-top: 20px;
   background-color: #ff6600;

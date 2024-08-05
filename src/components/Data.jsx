@@ -1,122 +1,122 @@
 const flashcards = [
   { 
-    term: "Supervised Learning", 
-    definition: "A type of machine learning where the model is trained on labeled data.",
+    term: "What type of machine learning uses labeled data for training?", 
+    answer: "Supervised",
     difficulty: "Easy"
   },
   { 
-    term: "Overfitting", 
-    definition: "A model that learns the training data too well, including noise, and performs poorly on new data.",
+    term: "What term describes a model that performs well on training data but poorly on new data?", 
+    answer: "Overfitting",
     difficulty: "Medium"
   },
   { 
-    term: "Normalization", 
-    definition: "A technique to scale data to a standard range, often [0, 1], to improve model training.",
+    term: "What technique scales data to a standard range, often [0, 1]?", 
+    answer: "Normalization",
     difficulty: "Easy"
   },
   { 
-    term: "Unsupervised Learning", 
-    definition: "A type of machine learning where the model is trained on unlabeled data and tries to find hidden patterns or structures.",
+    term: "What type of machine learning involves finding hidden patterns in unlabeled data?", 
+    answer: "Unsupervised",
     difficulty: "Medium"
   },
   { 
-    term: "Cross-Validation", 
-    definition: "A technique used to assess how the results of a statistical analysis will generalize to an independent data set, often by splitting the data into multiple subsets.",
+    term: "What method is used to assess how well a model will generalize to an independent data set?", 
+    answer: "Cross-Validation",
     difficulty: "Medium"
   },
   { 
-    term: "Feature Engineering", 
-    definition: "The process of using domain knowledge to create new features or modify existing features to improve model performance.",
+    term: "What is the process of creating new features to improve model performance called?", 
+    answer: "Feature Engineering",
     difficulty: "Medium"
   },
   { 
-    term: "Gradient Descent", 
-    definition: "An optimization algorithm used to minimize the cost function by iteratively adjusting model parameters.",
+    term: "What optimization algorithm is used to minimize the cost function by adjusting model parameters?", 
+    answer: "Gradient Descent",
     difficulty: "Medium"
   },
   { 
-    term: "Support Vector Machine (SVM)", 
-    definition: "A supervised learning algorithm that finds the hyperplane that best separates different classes in the feature space.",
+    term: "What algorithm finds the hyperplane that best separates different classes?", 
+    answer: "SVM",
     difficulty: "Hard"
   },
   { 
-    term: "Neural Network", 
-    definition: "A computational model inspired by the human brain, consisting of layers of interconnected nodes or neurons, used for tasks such as classification and regression.",
+    term: "What computational model consists of layers of interconnected neurons?", 
+    answer: "Neural Network",
     difficulty: "Hard"
   },
   { 
-    term: "Decision Tree", 
-    definition: "A model that uses a tree-like graph of decisions and their possible consequences to make predictions or decisions based on input features.",
+    term: "What model uses a tree-like graph of decisions to make predictions?", 
+    answer: "Decision Tree",
     difficulty: "Medium"
   },
   { 
-    term: "Principal Component Analysis (PCA)", 
-    definition: "A dimensionality reduction technique that transforms data into a new coordinate system where the greatest variances lie on the first coordinates.",
+    term: "What technique reduces dimensionality by transforming data into a new coordinate system?", 
+    answer: "PCA",
     difficulty: "Medium"
   },
   { 
-    term: "K-Nearest Neighbors (KNN)", 
-    definition: "A simple, instance-based learning algorithm that classifies data points based on the majority label of their k-nearest neighbors in the feature space.",
+    term: "What simple algorithm classifies data points based on the majority label of their neighbors?", 
+    answer: "KNN",
     difficulty: "Medium"
   },
   { 
-    term: "Random Forest", 
-    definition: "An ensemble learning method that combines multiple decision trees to improve classification accuracy and control overfitting.",
+    term: "What ensemble method combines multiple decision trees to improve accuracy?", 
+    answer: "Random Forest",
     difficulty: "Hard"
   },
   { 
-    term: "Clustering", 
-    definition: "An unsupervised learning technique used to group similar data points together based on their features, without predefined labels.",
+    term: "What unsupervised learning technique groups similar data points together?", 
+    answer: "Clustering",
     difficulty: "Medium"
   },
   { 
-    term: "Hyperparameter", 
-    definition: "A parameter whose value is set before the learning process begins and is not learned from the data, such as the learning rate or number of layers in a neural network.",
+    term: "What parameter is set before the learning process and not learned from data?", 
+    answer: "Hyperparameter",
     difficulty: "Medium"
   },
   { 
-    term: "Deep Learning", 
-    definition: "A subset of machine learning that uses neural networks with many layers (deep networks) to model complex patterns in large datasets.",
+    term: "What subset of machine learning uses deep networks to model complex patterns?", 
+    answer: "Deep Learning",
     difficulty: "Hard"
   },
   { 
-    term: "Regularization", 
-    definition: "A technique used to prevent overfitting by adding a penalty to the loss function based on the magnitude of model parameters.",
+    term: "What technique prevents overfitting by adding a penalty to the loss function?", 
+    answer: "Regularization",
     difficulty: "Medium"
   },
   { 
-    term: "Confusion Matrix", 
-    definition: "A table used to evaluate the performance of a classification model by comparing the predicted labels with the true labels.",
+    term: "What table evaluates a classification model by comparing predicted and true labels?", 
+    answer: "Confusion Matrix",
     difficulty: "Medium"
   },
   { 
-    term: "ROC Curve", 
-    definition: "A graphical representation of a classifier's performance, showing the trade-off between true positive rate and false positive rate at various threshold settings.",
+    term: "What curve represents a classifier's performance showing the trade-off between true positive and false positive rates?", 
+    answer: "ROC",
     difficulty: "Medium"
   },
   { 
-    term: "F1 Score", 
-    definition: "A measure of a model's accuracy that considers both precision and recall, calculated as the harmonic mean of the two.",
+    term: "What measure considers both precision and recall, calculated as their harmonic mean?", 
+    answer: "F1",
     difficulty: "Medium"
   },
   { 
-    term: "Bagging", 
-    definition: "An ensemble technique that improves model performance by training multiple instances of the model on different subsets of the data and averaging their predictions.",
+    term: "What ensemble technique trains multiple models on different data subsets and averages their predictions?", 
+    answer: "Bagging",
     difficulty: "Hard"
   },
   { 
-    term: "Boosting", 
-    definition: "An ensemble technique that combines the predictions of several weak models to create a strong model by focusing on correcting errors of previous models.",
+    term: "What ensemble technique combines weak models to create a strong model by focusing on correcting errors?", 
+    answer: "Boosting",
     difficulty: "Hard"
   },
   { 
-    term: "Exploratory Data Analysis (EDA)", 
-    definition: "The process of analyzing data sets to summarize their main characteristics, often with visual methods, before applying more formal modeling techniques.",
+    term: "What is the process of analyzing data sets to summarize their main characteristics called?", 
+    answer: "EDA",
     difficulty: "Easy"
   },
   { 
-    term: "Latent Variable", 
-    definition: "An unobserved variable that influences observed variables in a model, often used in techniques like factor analysis and hidden Markov models.",
+    term: "What unobserved variable influences observed variables in a model?", 
+    answer: "Latent",
     difficulty: "Medium"
   },
 ];

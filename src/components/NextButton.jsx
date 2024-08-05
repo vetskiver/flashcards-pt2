@@ -1,7 +1,7 @@
 import React from 'react';
 
-const NextButton = ({ onClick }) => (
-  <button onClick={onClick}>Next</button>
+const NextButton = ({ onClick, disabled }) => (
+  <button onClick={onClick} disabled={disabled}>Next</button>
 );
 
 export default NextButton;
