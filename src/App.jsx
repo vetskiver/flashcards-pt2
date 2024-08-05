@@ -171,13 +171,15 @@ const App = () => {
           isBackDisabled={cardHistory.length === 0}
         />
         <ColorCodingInfo />
-        <GameStats
-          correctAnswers={correctAnswers}
-          incorrectAnswers={incorrectAnswers}
-          skippedQuestions={skippedQuestions}
-          currentStreak={currentStreak}
-          longestStreak={longestStreak}
-        />
+        <div className="game-stats-container">
+          <GameStats
+            correctAnswers={correctAnswers}
+            incorrectAnswers={incorrectAnswers}
+            skippedQuestions={skippedQuestions}
+            currentStreak={currentStreak}
+            longestStreak={longestStreak}
+          />
+        </div>
       </div>
     </div>
   );

@@ -235,3 +235,27 @@ button:active {
 .shuffle-button:active {
   transform: scale(1.02);
 }
+
+.game-stats-container {
+  background-color: #f0f8ff; /* Light background color */
+  border-radius: 8px;       /* Rounded corners */
+  padding: 20px;            /* Space inside the container */
+  margin: 20px auto;        /* Center the container and add margin */
+  width: 30%;                /* Make the container width responsive */
+  max-width: 600px;          /* Limit the maximum width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.game-stats {
+  font-family: Arial, sans-serif; /* Font style */
+  color: #333;                    /* Text color */
+}
+
+.game-stats h4 {
+  margin-bottom: 10px;            /* Space below the heading */
+  color: #007bff;                 /* Heading color */
+}
+
+.game-stats p {
+  margin: 5px 0;                  /* Space between paragraphs */
+}
